@@ -12,6 +12,7 @@ import com.siblea.favotirevideos.adapter.FavoriteVideosListAdapter;
 import com.siblea.favotirevideos.model.FavoriteVideo;
 import com.siblea.favotirevideos.presenter.ListFavoriteVideoPresenter;
 import com.siblea.favotirevideos.task.ListFavoriteVideosTask;
+import com.siblea.favotirevideos.view.DividerItemDecoration;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements ListFavoriteVideo
     private void setupRecyclerView() {
         videosRecycler.setHasFixedSize(true);
         videosRecycler.setLayoutManager(new LinearLayoutManager(this));
+        videosRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         adapter = new FavoriteVideosListAdapter();
         videosRecycler.setAdapter(adapter);
     }
