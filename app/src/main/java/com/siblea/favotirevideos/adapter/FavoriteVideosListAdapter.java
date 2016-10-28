@@ -18,6 +18,11 @@ import butterknife.ButterKnife;
 public class FavoriteVideosListAdapter extends RecyclerView.Adapter<FavoriteVideosListAdapter.ViewHolder> {
 
     private List<FavoriteVideo> favoriteVideos;
+    private Callbacks callbacks;
+
+    public FavoriteVideosListAdapter(Callbacks callbacks) {
+        this.callbacks = callbacks;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,10 +32,17 @@ public class FavoriteVideosListAdapter extends RecyclerView.Adapter<FavoriteVide
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        FavoriteVideo favoriteVideo = favoriteVideos.get(position);
+        final FavoriteVideo favoriteVideo = favoriteVideos.get(position);
 
         holder.title.setText(favoriteVideo.getName());
         // TODO: more stuff
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callbacks.onFavoriteVideoClicked(favoriteVideo);
+            }
+        });
     }
 
     @Override
@@ -67,6 +79,10 @@ public class FavoriteVideosListAdapter extends RecyclerView.Adapter<FavoriteVide
     public void setFavoriteVideos(List<FavoriteVideo> favoriteVideos) {
         this.favoriteVideos = favoriteVideos;
         notifyDataSetChanged();
+    }
+
+    public interface Callbacks {
+        void onFavoriteVideoClicked(FavoriteVideo favoriteVideo);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.siblea.favotirevideos.adapter.FavoriteVideosListAdapter;
 import com.siblea.favotirevideos.model.FavoriteVideo;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements ListFavoriteVideosTask.View {
+public class MainActivity extends AppCompatActivity implements ListFavoriteVideosTask.View, FavoriteVideosListAdapter.Callbacks {
 
     @BindView(R.id.videos_recycler)
     RecyclerView videosRecycler;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements ListFavoriteVideo
         videosRecycler.setHasFixedSize(true);
         videosRecycler.setLayoutManager(new LinearLayoutManager(this));
         videosRecycler.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        adapter = new FavoriteVideosListAdapter();
+        adapter = new FavoriteVideosListAdapter(this);
         videosRecycler.setAdapter(adapter);
     }
 
@@ -70,5 +71,10 @@ public class MainActivity extends AppCompatActivity implements ListFavoriteVideo
     void addMovie(FloatingActionButton fab) {
         FavoriteVideo newFavoriteVide = new FavoriteVideo(673, "Regra de Bhaskara", "https://api.vimeo.com/videos/114282626");
         adapter.addFavoriteVideo(newFavoriteVide);
+    }
+
+    @Override
+    public void onFavoriteVideoClicked(FavoriteVideo favoriteVideo) {
+        Toast.makeText(getBaseContext(), favoriteVideo.getName(), Toast.LENGTH_LONG).show();
     }
 }
