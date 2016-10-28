@@ -1,6 +1,7 @@
 package com.siblea.favotirevideos;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements ListFavoriteVideosTask.View {
 
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements ListFavoriteVideo
 
     @BindView(R.id.empty_list_message)
     TextView emptyListMessage;
+
+    @BindView(R.id.add_movie_fab)
+    FloatingActionButton addMovieFab;
 
     private FavoriteVideosListAdapter adapter;
     private ListFavoriteVideosTask.Presenter presenter;
@@ -57,5 +62,11 @@ public class MainActivity extends AppCompatActivity implements ListFavoriteVideo
     public void displayEmptyListMesssage() {
         videosRecycler.setVisibility(View.GONE);
         emptyListMessage.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.add_movie_fab)
+    void addMovie(FloatingActionButton fab) {
+        FavoriteVideo newFavoriteVide = new FavoriteVideo(673, "Regra de Bhaskara", "https://api.vimeo.com/videos/114282626");
+        adapter.addFavoriteVideo(newFavoriteVide);
     }
 }
